@@ -1,0 +1,25 @@
+{
+  "name": "task_backend_node",
+  "version": "1.0.0",
+  "description": "Test Stockbit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-case-4": "nodemon --exec ts-node test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adeputraas/task_backend_node.git"
+  },
+  "author": "Ade Putra Susila",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adeputraas/task_backend_node/issues"
+  },
+  "homepage": "https://github.com/adeputraas/task_backend_node#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
