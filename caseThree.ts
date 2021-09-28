@@ -1,40 +1,46 @@
 // find string inside bracket
-class StringsUtility {
-    static findStringInBracket(str:string){
-        let results = '';
-        // check string length
-        if(str.length > 0){
-            // must check has bracket or not 
-            const hasBracket:boolean = /[(.*)]/.test(str);
-            if(hasBracket){
-                // if has bracket find the first ( and the last bracket ) 
-                const findFirstBracket = str.indexOf('(');
-                const findLastBracket = str.indexOf(')');
-                const indexFirstBracket = findFirstBracket +1; //always +1 because startIndex in substring always including the first character
-                results = str.substring(indexFirstBracket, findLastBracket);
-            } 
-        }
-        return results;
-    } 
-}
-
-
-class Word {
-    constructor(private _stringWords:string){
-        this._stringWords = _stringWords;
+class FindFirstString {
+  private static findStringInBracket(str: string) {
+    let results = "";
+    // check string length
+    if (str.length <= 2) {
+      return results;
     }
 
-   checkResults():void {
-        const finalResult = StringsUtility.findStringInBracket(this._stringWords);
-        console.log(finalResult,'ini final results;')
-   }
+    // must check has bracket or not
+    const indexAfterFirstBracket = str.indexOf("(") + 1; //always +1 because startIndex in substring always including the first character
+
+    // incase index after first bracket not found
+    if (indexAfterFirstBracket === 0) {
+      return results;
+    }
+
+    const indexLastBracket = str.indexOf(")"); // 4
+
+    // incase index last index not found
+    if (indexLastBracket === -1) {
+      return results;
+    }
+
+    // substring the results
+    results = str.substring(indexAfterFirstBracket, indexLastBracket);
+
+    return results;
+  }
+
+  static checkResults(stringWords: string): void {
+    const finalResult = this.findStringInBracket(stringWords);
+    console.log(finalResult, "ini final results;");
+  }
 }
 
-const word = new Word('(ade,asd.as.das)()()()');
-const word2 = new Word('ade');
-const word3 = new Word('()()(ade)())');
-const word4 = new Word('');
-word.checkResults();
-word2.checkResults();
-word3.checkResults();
-word4.checkResults();
+// Personal List Cases
+// =================
+// ()()()()()()
+// asdasdasd
+// a(a)
+// ()
+// (1)
+// (zz..)
+
+const word = FindFirstString.checkResults("()()()()()()");

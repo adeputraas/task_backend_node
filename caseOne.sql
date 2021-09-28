@@ -1,0 +1,1 @@
+SELECT usr."ID", usr."UserName", (SELECT usr2."UserName" FROM users usr2 WHERE usr2."ID" = usr."ParentUserName") FROM users usr;
