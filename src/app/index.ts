@@ -5,7 +5,7 @@ import { logger } from "./logger";
 import routes from "./routes";
 
 export default (app: Application): void => {
-  app.use(cors());
+//   app.use(cors());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 

@@ -10,9 +10,9 @@ export class MovieController {
     // TODO: CHECK VALIDATOR BELOM DI TESTING
   async getMovie(req: Request, res: Response, next: NextFunction) {
     try {
-      const isValid = await validator.validateMovie(req.params);
-      console.log(isValid)
-      const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.params);
+      const isValid = await validator.validateMovie(req.query);
+      console.log(isValid,'ini valid')
+    //   const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.params);
       res.json([]);
     } catch (error) {
       next(error);
@@ -21,7 +21,7 @@ export class MovieController {
 
   async getDetailMovie(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.params);
+      const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.query);
       res.json(result);
     } catch (error) {
       next(error);
