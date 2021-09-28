@@ -3,6 +3,7 @@ import Joi from "joi";
 export class ValidatorMovie {
   constructor() {}
 
+  //TODO: CHECK LAGI VALIDATORNYA
   async validateMovie(params: any) {
     const schema = Joi.object({
       title: Joi.string(),
@@ -14,7 +15,7 @@ export class ValidatorMovie {
     try {
       const response = await schema.validateAsync(params);
       return response;
-      
+
     } catch (error) {}
   }
 }
