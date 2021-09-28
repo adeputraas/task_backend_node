@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run-case-4": "nodemon --exec ts-node test.ts"
+    "run-case-3": "nodemon --exec ts-node caseThree.ts",
+    "run-case-4": "nodemon --exec ts-node caseFour.ts"
   },
   "repository": {
     "type": "git",
