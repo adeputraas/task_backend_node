@@ -1,29 +1,26 @@
 import { Request, Response, NextFunction } from "express";
-import { MovieServices } from "./services.movie";
 import config from "../../config";
-import { ValidatorMovie } from "./validator.movie";
+import { OMDbProvider } from "./providers/OMDbProvider";
+import { RetrieveMovieByImdbIdErrors } from "./use-cases/RetrieveMovieByImdbId/Errors";
+import { RetrieveMovieByImdbIdUseCase } from "./use-cases/RetrieveMovieByImdbId/UseCase";
 
-const services = new MovieServices();
-const validator = new ValidatorMovie();
+const omdbProvider = new OMDbProvider(config.urlMovies, config.credentialsKey);
 
+const retrieveMovieByImdbIdUseCase = new RetrieveMovieByImdbIdUseCase(omdbProvider);
 export class MovieController {
-    // TODO: CHECK VALIDATOR BELOM DI TESTING
-  async getMovie(req: Request, res: Response, next: NextFunction) {
+  // TODO: CHECK VALIDATOR BELOM DI TESTING
+  async getMovieById(req: Request, res: Response, next: NextFunction) {
     try {
-      const isValid = await validator.validateMovie(req.query);
-      console.log(isValid,'ini valid')
-    //   const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.params);
-      res.json([]);
+      const result = await retrieveMovieByImdbIdUseCase.execute({
+        id: req.query.id as string,
+        plot: req.query.plot as "short" | "full",
+        response: req.query.response as "json" | "xml",
+      });
+      res.json(result.props);
     } catch (error) {
-      next(error);
-    }
-  }
-
-  async getDetailMovie(req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await services.getMovies(config.urlMovies, config.credentialsKey, req.query);
-      res.json(result);
-    } catch (error) {
+      if(error instanceof RetrieveMovieByImdbIdErrors.MovieNotFound){
+        return res.status(400).json(error.message);
+      }
       next(error);
     }
   }

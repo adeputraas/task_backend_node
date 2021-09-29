@@ -6,6 +6,6 @@ export default {
   urlMovies: "http://www.omdbapi.com/",
   credentialsKey: "faf7e5bb",
   logger: {
-    LOG_LEVEL: process.env.LOG_LEVEL || "info",
+    LOG_LEVEL: process.env.NODE_ENV === "prod" ? "info" : "trace",
   },
 };
