@@ -28,7 +28,7 @@ test("Get Movie By ID - Error Provider ID", async () => {
   }
 });
 
-test("Get Movie By ID - Error Provider Plot", async () => {
+test("Get Movie By ID - Error Validation Plot", async () => {
   try {
     await retrieveMovieByImdbIdUseCase.execute({
       id: "-99",
@@ -40,7 +40,7 @@ test("Get Movie By ID - Error Provider Plot", async () => {
   }
 });
 
-test("Get Movie By ID - Error Validation", async () => {
+test("Get Movie By ID - Error Validation ID", async () => {
   try {
     await retrieveMovieByImdbIdUseCase.execute({
       id: 1 as any,
