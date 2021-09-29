@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import config from "../../../config";
-import { OMDbProvider } from "../providers/OMDbProvider.mock";
+import { OMDbProvider } from "../providers/mock/OMDbProvider.mock";
 import { RetrieveMovieByImdbIdErrors } from "../use-cases/RetrieveMovieByImdbId/Errors";
 import { RetrieveMovieByImdbIdUseCase } from "../use-cases/RetrieveMovieByImdbId/UseCase";
 

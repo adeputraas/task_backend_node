@@ -1,7 +1,7 @@
-import { Movie } from "../entities/Movie";
-import { IMovieProvider } from "./IMovieProvider";
+import { Movie } from "../../entities/Movie";
+import { IMovieProviderById } from "../IMovieProvider";
 
-export class OMDbProvider implements IMovieProvider {
+export class OMDbProvider implements IMovieProviderById {
   constructor(private url: string, private credentialsKey: string) {}
   async retrieveByImdbId(id: string, plot:string): Promise<Movie | undefined> {
     try {

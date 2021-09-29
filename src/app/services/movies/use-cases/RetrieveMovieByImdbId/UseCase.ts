@@ -1,10 +1,10 @@
 import { logger } from "../../../../logger";
-import { IMovieProvider } from "../../providers/IMovieProvider";
+import { IMovieProviderById } from "../../providers/IMovieProvider";
 import { RetrieveMovieByImdbIdDTOSchema, RetrieveMovieByImdbIdDTO } from "./DTO";
 import { RetrieveMovieByImdbIdErrors } from "./Errors";
 
 export class RetrieveMovieByImdbIdUseCase {
-  constructor(private movieProvider: IMovieProvider) {}
+  constructor(private movieProvider: IMovieProviderById) {}
 
   public async execute(props: RetrieveMovieByImdbIdDTO) {
     try {
