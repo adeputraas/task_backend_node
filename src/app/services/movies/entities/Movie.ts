@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PublicEntity } from "../../common/entities/PublicEntity";
 
 export const RATING_SCHEMA = z.object({
   Source: z.string(),
@@ -35,15 +36,9 @@ export const MOVIE_SCHEMA = z.object({
 
 export type MovieProps = z.infer<typeof MOVIE_SCHEMA>;
 
-export class Movie {
-  private constructor(public props: MovieProps) {}
-
+export class Movie extends PublicEntity<MovieProps> {
   static create(props: MovieProps) {
-    try {
-      const movie = MOVIE_SCHEMA.parse(props);
-      return new Movie(movie);
-    } catch (error) {
-      throw error;
-    }
+    const movie = MOVIE_SCHEMA.parse(props);
+    return new Movie(movie);
   }
 }

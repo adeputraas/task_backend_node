@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import knex from "knex";
 import config from "../../config";
+import { KnexUserActivityRepository } from "../users/repositories/KnexUserActivityRepository";
+import { InsertUserActivityUseCase } from "../users/use-cases/InsertUserActivity/UseCase";
 import { OMDbProvider, OMDbProviderTitle } from "./providers/OMDbProvider";
 import { RetrieveMovieByImdbIdErrors } from "./use-cases/RetrieveMovieByImdbId/Errors";
 import { RetrieveMovieByImdbIdUseCase } from "./use-cases/RetrieveMovieByImdbId/UseCase";
@@ -11,6 +14,21 @@ const omdbProviderTitle = new OMDbProviderTitle(config.urlMovies, config.credent
 
 const retrieveMovieByImdbIdUseCase = new RetrieveMovieByImdbIdUseCase(omdbProvider);
 const retrieveMovieByImdbTitleUseCase = new RetrieveMovieByImdbTitleUseCase(omdbProviderTitle);
+
+const userActivityRepository = new KnexUserActivityRepository(
+  knex({
+    client: config.postgresConnection.client,
+    connection: {
+      host: config.postgresConnection.host,
+      port: config.postgresConnection.port,
+      password: config.postgresConnection.password,
+      database: config.postgresConnection.database,
+      user: config.postgresConnection.user,
+    },
+  })
+);
+const insertUserActivityUseCase = new InsertUserActivityUseCase(userActivityRepository);
+
 export class MovieController {
   async getMovieById(req: Request, res: Response, next: NextFunction) {
     try {
@@ -19,6 +37,15 @@ export class MovieController {
         plot: req.query.plot as "short" | "full",
         response: req.query.response as "json" | "xml",
       });
+
+      await insertUserActivityUseCase.execute({
+        dateTime: new Date(),
+        endpoint: req.path,
+        request: {
+          title: result.props.Title,
+        },
+      });
+
       res.json(result.props);
     } catch (error) {
       if (error instanceof RetrieveMovieByImdbIdErrors.MovieNotFound) {
@@ -36,6 +63,15 @@ export class MovieController {
         plot: req.query.plot as "short" | "full",
         response: req.query.response as "json" | "xml",
       });
+
+      await insertUserActivityUseCase.execute({
+        dateTime: new Date(),
+        endpoint: req.path,
+        request: {
+          title: result.props.Title,
+        },
+      });
+
       res.json(result.props);
     } catch (error) {
       if (error instanceof RetrieveMovieByImdbTitleErrors.MovieNotFound) {
