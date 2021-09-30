@@ -2,7 +2,7 @@
 Express OMDB-Movie mixed another library/framework to make synergy robust REST API It's use some of good technologies in community.
 - Language: **Typescript**
 - Testing: **Jest**
-- Documentation: **Swagger/OpenAPI**
+- Documentation: **Swagger/OpenAPI** (Not Impelemented Yet)
 - Code Styles: **ESLint + Prettier**
 - Reliable Logger: **Pino**
 
