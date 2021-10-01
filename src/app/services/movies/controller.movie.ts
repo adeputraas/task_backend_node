@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import knex from "knex";
 import config from "../../config";
-import { KnexUserActivityRepository } from "../users/repositories/KnexUserActivityRepository";
+import { KnexUserActivityRepository } from "../users/repositories/implementations/KnexRepository/KnexUserActivityRepository";
+import { userActivityMongooseModel } from "../users/repositories/implementations/MongooseRepository/models/UserActivityModelMongoose";
+import { MongooseUserActivityRepository } from "../users/repositories/implementations/MongooseRepository/MongooseUserActivityRepository";
 import { InsertUserActivityUseCase } from "../users/use-cases/InsertUserActivity/UseCase";
 import { OMDbProvider, OMDbProviderTitle } from "./providers/OMDbProvider";
 import { RetrieveMovieByImdbIdErrors } from "./use-cases/RetrieveMovieByImdbId/Errors";
@@ -15,7 +17,7 @@ const omdbProviderTitle = new OMDbProviderTitle(config.urlMovies, config.credent
 const retrieveMovieByImdbIdUseCase = new RetrieveMovieByImdbIdUseCase(omdbProvider);
 const retrieveMovieByImdbTitleUseCase = new RetrieveMovieByImdbTitleUseCase(omdbProviderTitle);
 
-const userActivityRepository = new KnexUserActivityRepository(
+const userActivityRepositoryKnex = new KnexUserActivityRepository(
   knex({
     client: config.postgresConnection.client,
     connection: {
@@ -27,7 +29,10 @@ const userActivityRepository = new KnexUserActivityRepository(
     },
   })
 );
-const insertUserActivityUseCase = new InsertUserActivityUseCase(userActivityRepository);
+
+const userActivityRepositoryMongoose = new MongooseUserActivityRepository(userActivityMongooseModel);
+
+const insertUserActivityUseCase = new InsertUserActivityUseCase(userActivityRepositoryKnex);
 
 export class MovieController {
   async getMovieById(req: Request, res: Response, next: NextFunction) {

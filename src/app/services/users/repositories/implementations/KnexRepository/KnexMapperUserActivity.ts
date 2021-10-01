@@ -1,4 +1,4 @@
-import { UserActivity } from "../entities/UserActivity";
+import { UserActivity } from "../../../entities/UserActivity";
 
 export interface KnexUserActivityProps {
   id: string;

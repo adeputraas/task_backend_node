@@ -1,6 +1,6 @@
 import { UserActivity } from "../../entities/UserActivity";
 import { IUserActivityRepository } from "../../repositories/IUserActivityRepository";
-import { KnexUserActivityRepository } from "../../repositories/KnexUserActivityRepository";
+import { KnexUserActivityRepository } from "../../repositories/implementations/KnexRepository/KnexUserActivityRepository";
 import { InsertUserActivityDTO, InsertUserActivityDTOSchema } from "./DTO";
 
 export class InsertUserActivityUseCase {

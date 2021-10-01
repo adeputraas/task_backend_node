@@ -1,7 +1,7 @@
 import { Knex, knex } from "knex";
-import { UserActivity } from "../entities/UserActivity";
-import { KnexMapperUserActivity } from "../mapper/KnexMapperUserActivity";
-import { IUserActivityRepository } from "./IUserActivityRepository";
+import { UserActivity } from "../../../entities/UserActivity";
+import { KnexMapperUserActivity } from "./KnexMapperUserActivity";
+import { IUserActivityRepository } from "../../IUserActivityRepository";
 
 export class KnexUserActivityRepository implements IUserActivityRepository {
   constructor(private client: Knex) {}
