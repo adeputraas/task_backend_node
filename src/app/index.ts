@@ -20,6 +20,8 @@ export default async (app: Application): Promise<void> => {
 
   // TODO:ERROR HANDLING & SWAGGER FOR TESTING
 
+  // TODO: LENGKAPIN CRUD (ACTIVITY & MOVIE) & UNIT TESTING
+
   // Unhandling Rejection Expection
   process.on("unhandledRejection", (reason: string, p: Promise<unknown>) => {
     logger.fatal(p, "unhandled Promise Rejection");
